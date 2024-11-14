@@ -1,6 +1,20 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Converter from "./Converter";
 
+// Mocking the fetch function
+beforeAll(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({ conversion_rates: { EUR: 0.85 } }) // Mocking an exchange rate response
+    })
+  );
+});
+
+afterAll(() => {
+  global.fetch.mockClear();
+  delete global.fetch;
+});
+
 test("converts currency and displays the result", async () => {
   render(<Converter />);
 

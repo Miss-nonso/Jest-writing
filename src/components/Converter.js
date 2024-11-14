@@ -11,12 +11,15 @@ function Converter() {
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   useEffect(() => {
-    fetch(API_URL + "/USD")
-      .then((response) => response.json())
-      .then((data) => {
-        setCurrencies(Object.keys(data.conversion_rates));
-      })
-      .catch((error) => console.error("Error fetching currency data:", error));
+    API_URL + "/USD" &&
+      fetch(API_URL + "/USD")
+        .then((response) => response.json())
+        .then((data) => {
+          setCurrencies(Object.keys(data.conversion_rates));
+        })
+        .catch((error) =>
+          console.error("Error fetching currency data:", error)
+        );
   }, []);
 
   const convertCurrency = () => {
